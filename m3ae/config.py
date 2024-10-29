@@ -89,7 +89,7 @@ def config():
     per_gpu_batchsize = 0
     num_gpus = 8
     num_nodes = 1
-    load_path = ""
+    load_path = "/home/vdurham/IDL-Project/MM-T-VQA-Healthcare/m3ae_finetuned_vqa_vqa_rad_77.4.ckpt"
     num_workers = 8
     precision = 16
 

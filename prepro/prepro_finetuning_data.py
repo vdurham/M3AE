@@ -7,7 +7,7 @@ import pandas as pd
 from make_arrow import make_arrow, make_arrow_vqa, make_arrow_melinda
 
 
-def prepro_vqa_vqa_rad():
+def prepro_vqa_vqa_rad(data_root="/M3AE/data/finetune_data/vqa_rad"):
     random.seed(42)
 
     data = {
@@ -16,12 +16,14 @@ def prepro_vqa_vqa_rad():
         "test": []
     }
 
-    data_root = "data/finetune_data/vqa_rad/"
     image_root = f"{data_root}/images"
 
     for split in ["train", "val", "test"]:
         with open(f"{data_root}/{split}set.json", "r") as fp:
-            samples = json.load(fp)
+            content = fp.read()
+            if not content:
+                continue
+            samples = json.loads(content)
             for sample in samples:
                 img_path = os.path.join(image_root, sample["image_name"])
                 qid = sample["qid"]
@@ -35,7 +37,7 @@ def prepro_vqa_vqa_rad():
                     "answer": answer,
                     "answer_type": answer_type
                 })
-    make_arrow_vqa(data, "vqa_vqa_rad", "data/finetune_arrows/")
+    make_arrow_vqa(data, "vqa_vqa_rad", "M3AE/data/finetune_arrows/")
 
 
 def prepro_vqa_slack():
@@ -178,7 +180,7 @@ def prepro_irtr_roco(min_length=3):
 
 if __name__ == '__main__':
     prepro_vqa_vqa_rad()
-    prepro_vqa_slack()
-    prepro_vqa_medvqa2019()
-    prepro_cls_melinda()
-    prepro_irtr_roco()
+    # prepro_vqa_slack()
+    # prepro_vqa_medvqa2019()
+    # prepro_cls_melinda()
+    # prepro_irtr_roco()
